@@ -1,17 +1,34 @@
 import { Route, Routes } from "react-router-dom";
 import  Navbar from "./components/Navbar";
 import Home from "./pages/Home";
+import ProtectedRoute from './components/ProtectedRoute';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Account from './pages/Account';
+import { AuthContextProvider } from './context/AuthContext';
 
 
 function App() {
 
   return (
     <>
-     <Navbar/>
-     <Routes>
-     <Route path='/' element={<Home />} />
-     </Routes>
-    </>
+    <AuthContextProvider>
+      <Navbar />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route
+          path='/account'
+          element={
+            <ProtectedRoute>
+              <Account />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </AuthContextProvider>
+  </>
   );
 }
 
